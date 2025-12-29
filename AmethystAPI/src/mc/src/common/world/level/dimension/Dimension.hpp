@@ -190,12 +190,12 @@ public:
     
     /**@vidx {22} */
 	MC virtual class HashedString getDefaultBiome() const;
-    
+
     /**@vidx {23} */
-	MC virtual bool hasGround() const;
+	MC virtual bool showSky() const;
     
     /**@vidx {24} */
-	MC virtual bool showSky() const;
+	MC virtual bool hasGround() const;
     
     /**@vidx {25} */
 	MC virtual class BlockPos getSpawnPos() const;

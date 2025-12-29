@@ -11,6 +11,11 @@ Amethyst::HookManager::~HookManager()
         *hook = {};
     }
 
+    for (auto midHook : std::ranges::reverse_view(mMidHooks)) {
+        *midHook = {};
+    }
+
     mHooks.clear();
+    mMidHooks.clear();
     mFuncHashToOriginalAddress.clear();
 }

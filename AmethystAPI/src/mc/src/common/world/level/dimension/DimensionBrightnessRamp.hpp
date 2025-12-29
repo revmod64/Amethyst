@@ -6,8 +6,8 @@ public:
 
 public:
     virtual ~DimensionBrightnessRamp() = default;
-    void buildBrightnessRamp();
-    float getBaseAmbientValue();
+    virtual void buildBrightnessRamp();
+    virtual float getBaseAmbientValue();
 
     DimensionBrightnessRamp();
 };

@@ -1,14 +1,16 @@
+/// @symbols
 #pragma once
+#include <amethyst/Imports.hpp>
 #include <mc/src/common/world/level/chunk/ChunkGeneratorStructureState.hpp>
 #include <mc/src/common/world/level/levelgen/structure/StructureCache.hpp>
 
-/**@vtable*/
 class StructureFeatureRegistry {
 public:
     std::byte padding0[208];
 
-    /**@asmName {StructureFeatureRegistry_ctor}*/
-    StructureFeatureRegistry();
+    //{StructureFeatureRegistry_ctor}
+    /// @sig {48 89 5C 24 ? 48 89 74 24 ? 48 89 4C 24 ? 57 48 83 EC ? 48 8B F9 33 F6 48 89 31 48 89 71 ? 48 89 71 ? 48 89 71 ? 48 89 71 ? 48 89 71 ? 48 89 71 ? 48 89 71 ? 48 89 71 ? 48 8D 59 ? 0F 57 C0}
+    MC StructureFeatureRegistry();
 
     ~StructureFeatureRegistry(){};
 };

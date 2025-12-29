@@ -1,4 +1,6 @@
+/// @symbols
 #pragma once
+#include <amethyst/Imports.hpp>
 #include <unordered_set>
 #include <condition_variable>
 #include <mc/src-deps/core/utility/buffer_span.hpp>
@@ -11,7 +13,7 @@
 #include <mc/src/common/world/level/levelgen/structure/StructureFeatureType.hpp>
 #include <mc/src/common/world/level/levelgen/structure/StructureFeatureRegistry.hpp>
 
-/**@vtable*/
+/**@vptr {0x4E5F6A0} */
 class WorldGenerator : public ChunkSource, public IPreliminarySurfaceProvider {
 public:
     struct BlockVolumeDimensions {
@@ -34,52 +36,52 @@ public:
     * @symbol {??1WorldGenerator@@UEAA@XZ}
     * @vidx {0} 
     */
-    virtual ~WorldGenerator();
+    MC virtual ~WorldGenerator();
 
     /**@vidx {12} */
-    virtual void postProcessMobsAt(class BlockSource& region, int chunkWestBlock, int chunkNorthBlock, Random& random) override;
+    MC virtual void postProcessMobsAt(class BlockSource& region, int chunkWestBlock, int chunkNorthBlock, Random& random) override;
 
     /**@vidx {33} */
-    virtual void init();
+    MC virtual void init();
 
     /**@vidx {34} */
-    virtual StructureFeatureType findStructureFeatureTypeAt(class BlockPos const& pos);
+    MC virtual StructureFeatureType findStructureFeatureTypeAt(class BlockPos const& pos);
 
     /**@vidx {35} */
-    virtual bool isStructureFeatureTypeAt(class BlockPos const& pos, StructureFeatureType type) const;
+    MC virtual bool isStructureFeatureTypeAt(class BlockPos const& pos, StructureFeatureType type) const;
     
     /**@vidx {36} */
-    virtual bool findNearestStructureFeature(StructureFeatureType, class BlockPos const&, class BlockPos&, bool, std::optional<class HashedString>);
+    MC virtual bool findNearestStructureFeature(StructureFeatureType, class BlockPos const&, class BlockPos&, bool, std::optional<class HashedString>);
 
     /**@vidx {37} */
-    virtual void garbageCollectBlueprints(class buffer_span<class ChunkPos> activeChunks);
+    MC virtual void garbageCollectBlueprints(class buffer_span<class ChunkPos> activeChunks);
 
     /**@vidx {38} */
-    virtual void prepareHeights(class BlockVolume& box, class ChunkPos const& chunkPos, bool factorInBeardsAndShavers) = 0;
+    MC virtual void prepareHeights(class BlockVolume& box, class ChunkPos const& chunkPos, bool factorInBeardsAndShavers) = 0;
     
     /**@vidx {39} */
-    virtual void prepareAndComputeHeights(class BlockVolume& box, class ChunkPos const& chunkPos, std::vector<short>& ZXheights, bool factorInBeardsAndShavers, int skipTopN) = 0;
+    MC virtual void prepareAndComputeHeights(class BlockVolume& box, class ChunkPos const& chunkPos, std::vector<short>& ZXheights, bool factorInBeardsAndShavers, int skipTopN) = 0;
 
     /**@vidx {40} */
-    virtual class BiomeArea getBiomeArea(class BoundingBox const& area, uint32_t scale) const = 0;
+    MC virtual class BiomeArea getBiomeArea(class BoundingBox const& area, uint32_t scale) const = 0;
 
     /**@vidx {41} */
-    virtual class BiomeSource const& getBiomeSource() const = 0;
+    MC virtual class BiomeSource const& getBiomeSource() const = 0;
 
     /**@vidx {42} */
-    virtual struct BlockVolumeDimensions getBlockVolumeDimensions() const = 0;
+    MC virtual struct BlockVolumeDimensions getBlockVolumeDimensions() const = 0;
 
     /**@vidx {43} */
-    virtual class BlockPos findSpawnPosition() const = 0;
+    MC virtual class BlockPos findSpawnPosition() const = 0;
 
     /**@vidx {44} */
-    virtual void addHardcodedSpawnAreas(class LevelChunk& lc);
+    MC virtual void addHardcodedSpawnAreas(class LevelChunk& lc);
 
     /**@vidx {45} */
-    virtual void debugRender();
+    MC virtual void debugRender();
 
     /**@vidx {46} */
-    virtual void decorateWorldGenLoadChunk(
+    MC virtual void decorateWorldGenLoadChunk(
         class Biome const& biome,
         class LevelChunk& lc,
         class BlockVolumeTarget& target,
@@ -87,7 +89,7 @@ public:
         class ChunkPos const& pos) const = 0;
 
     /**@vidx {47} */
-    virtual void decorateWorldGenPostProcess(
+    MC virtual void decorateWorldGenPostProcess(
         class Biome const& biome,
         class LevelChunk& lc,
         class BlockSource& source,
@@ -98,7 +100,7 @@ public:
     virtual std::optional<short> getPreliminarySurfaceLevel(QuartPos2d worldQuartPos) const override;
 
     /// @sig {48 89 5C 24 ? 55 56 57 48 83 EC ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 44 24 ? 49 8B F0 48 8B DA 48 8B F9 48 89 4C 24 ? 4C 89 44 24}
-    WorldGenerator(class Dimension& dimension, std::unique_ptr<StructureFeatureRegistry> structureFeatureRegistry);
+    MC WorldGenerator(class Dimension& dimension, std::unique_ptr<StructureFeatureRegistry> structureFeatureRegistry);
 };
 
 static_assert(sizeof(WorldGenerator) == 0x188, "WorldGenerator size is incorrect!");

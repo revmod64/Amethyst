@@ -62,34 +62,30 @@ function build_mod(mod_name, targetMajor, targetMinor, targetPatch, automated_bu
             import("core.base.json")
             import("utils.archive")
 
-            local releases_file = path.join(os.tmpdir(), "runtime-importer.releases.json")
-            http.download("https://api.github.com/repos/AmethystAPI/Runtime-Importer/releases/latest", releases_file)
-
+            local release_tag = "manual-30"
             local importer_dir = path.join(os.curdir(), ".importer");
             local bin_dir = path.join(importer_dir, "bin");
-            local release = json.loadfile(releases_file)
-            local latest_tag = release.tag_name
             local installed_version_file = path.join(importer_dir, "version.txt")
             local installed_version = os.isfile(installed_version_file) and io.readfile(installed_version_file) or "None"
-            local should_reinstall = installed_version ~= latest_tag
-
+            local should_reinstall = installed_version ~= release_tag
             local is_first_install = should_reinstall and installed_version == "None"
 
             if should_reinstall and not is_first_install and not automated_build then
-                io.write("Runtime-Importer is outdated (installed: " .. installed_version .. ", latest: " .. latest_tag .. "), install? (y/n): ")
+                io.write("Runtime-Importer is outdated (installed: " .. installed_version .. ", latest: " .. release_tag .. "), install? (y/n): ")
                 io.flush()
                 local answer = (io.read() or ""):lower()
                 should_reinstall = (answer == "" or answer == "y")
             end
 
             if should_reinstall then
-                local url = "https://github.com/AmethystAPI/Runtime-Importer/releases/latest/download/Runtime-Importer.zip"
+                local url = "https://github.com/AmethystAPI/Runtime-Importer/releases/download/" ..
+                            release_tag .. "/Runtime-Importer.zip"
                 local zipfile = path.join(os.tmpdir(), "Runtime-Importer.zip")
-                print("Installing Runtime-Importer " .. latest_tag .. "...")
+                print("Installing Runtime-Importer " .. release_tag .. "...")
 
                 http.download(url, zipfile)
                 archive.extract(zipfile, bin_dir)
-                io.writefile(installed_version_file, latest_tag)
+                io.writefile(installed_version_file, release_tag)
             end
 
             local generated_dir = path.join(importer_dir)

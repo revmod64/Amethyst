@@ -162,9 +162,35 @@ namespace Amethyst {
             mHooks.push_back(&safetyHookTrampoline);
         }
 
+        // --- MidHooks ---
+        void CreateMidHookAbsolute(SafetyHookMid& midHook, uintptr_t originalAddress, safetyhook::MidHookFn hook, bool skip = false)
+        {
+            midHook = safetyhook::create_mid((void*)originalAddress, hook, skip);
+            mMidHooks.push_back(&midHook);
+        }
+
+        template <auto OriginalFn>
+        void CreateMidHook(SafetyHookMid& midHook, safetyhook::MidHookFn hook, bool skip = false)
+        {
+            using FnType = decltype(OriginalFn);
+            uintptr_t original_addr = 0;
+
+            if constexpr (std::is_member_function_pointer_v<FnType>) {
+                union { FnType fn; uintptr_t addr; } u{};
+                u.fn = OriginalFn;
+                original_addr = u.addr;
+            }
+            else {
+                original_addr = std::bit_cast<uintptr_t>(OriginalFn);
+            }
+
+            CreateMidHookAbsolute(midHook, original_addr, hook, skip);
+        }
+
         ~HookManager();
     private:
         std::vector<SafetyHookInline*> mHooks;
+        std::vector<SafetyHookMid*> mMidHooks;
         std::unordered_map<size_t, uintptr_t> mFuncHashToOriginalAddress;
         friend class AmethystRuntime;
     };
